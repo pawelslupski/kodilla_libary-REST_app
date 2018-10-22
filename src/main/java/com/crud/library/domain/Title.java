@@ -1,10 +1,13 @@
 package com.crud.library.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Entity
 @Table(name = "TITLE")
 public final class Title {
@@ -14,15 +17,6 @@ public final class Title {
     private int published;
     private List<Copy> copies = new ArrayList<>();
 
-    public Title() {
-    }
-
-    public Title(String title, String author, int published) {
-        this.title = title;
-        this.author = author;
-        this.published = published;
-    }
-
     public Title(int id, String title, String author, int published) {
         this.id = id;
         this.title = title;
@@ -31,7 +25,7 @@ public final class Title {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "ID", unique = true)
     public int getId() {

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class TitleMapper {
     public Title mapToTitle(final TitleDto titleDto) {
-        return new Title(titleDto.getId(), titleDto.getTitle(),
-                titleDto.getAuthor(), titleDto.getPublished());
+        return new Title(titleDto.getId(), titleDto.getTitle(), titleDto.getAuthor(),
+                titleDto.getPublished());
     }
 
     public TitleDto mapToTitleDto(final Title title) {
-        return new TitleDto(title.getId(), title.getTitle(),
-                title.getAuthor(), title.getPublished());
+        return new TitleDto(title.getId(), title.getTitle(), title.getAuthor(),
+                title.getPublished());
     }
 }

@@ -1,8 +1,12 @@
 package com.crud.library.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "COPY")
 public final class Copy {
@@ -10,16 +14,8 @@ public final class Copy {
     private String status;
     private Title title;
 
-    public Copy() {
-    }
-
-    public Copy(String status, Title title) {
-        this.status = status;
-        this.title = title;
-    }
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "ID", unique = true)
     public int getId() {

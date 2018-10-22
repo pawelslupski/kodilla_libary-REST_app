@@ -10,9 +10,10 @@ import lombok.Setter;
 public class CopyDto {
     private int id;
     private String status;
+    private TitleDto title;
 
-    public CopyDto(String status) {
+    public CopyDto(String status, TitleDto title) {
         this.status = status;
+        this.title = title;
     }
-
 }

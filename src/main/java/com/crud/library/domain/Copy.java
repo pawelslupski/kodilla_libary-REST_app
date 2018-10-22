@@ -13,8 +13,9 @@ public final class Copy {
     public Copy() {
     }
 
-    public Copy(String status) {
+    public Copy(String status, Title title) {
         this.status = status;
+        this.title = title;
     }
 
     @Id

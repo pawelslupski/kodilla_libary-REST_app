@@ -13,5 +13,4 @@ public class ReaderMapper {
     public ReaderDto mapToReaderDto(final Reader reader) {
         return new ReaderDto(reader.getFirstName(), reader.getLastName());
     }
-
 }

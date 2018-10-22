@@ -14,13 +14,11 @@ public class BorrowingDto {
     private int id;
     private LocalDate borrowDate;
     private LocalDate returnDate;
-    private CopyDto copy;
-    private ReaderDto reader;
+    private Copy copy;
+    private Reader reader;
 
-    public BorrowingDto(LocalDate borrowDate, CopyDto copy, ReaderDto reader) {
-        this.borrowDate = borrowDate;
-        this.copy = copy;
-        this.reader = reader;
+    public BorrowingDto(LocalDate borrowDate) {
+        this.borrowDate = borrowDate;;
     }
 
 }

@@ -13,5 +13,4 @@ public class BorrowingMapper {
     public BorrowingDto mapToBorrowingDto(final Borrowing borrowing) {
         return new BorrowingDto(borrowing.getBorrowDate());
     }
-
 }

@@ -23,6 +23,13 @@ public final class Title {
         this.published = published;
     }
 
+    public Title(int id, String title, String author, int published) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.published = published;
+    }
+
     @Id
     @GeneratedValue
     @NotNull
@@ -76,5 +83,4 @@ public final class Title {
     public void setCopies(List<Copy> copies) {
         this.copies = copies;
     }
-
 }

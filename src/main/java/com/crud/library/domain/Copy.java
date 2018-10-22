@@ -32,7 +32,7 @@ public final class Copy {
         return status;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TITLE_ID")
     public Title getTitle() {
         return title;
@@ -49,5 +49,4 @@ public final class Copy {
     public void setTitle(Title title) {
         this.title = title;
     }
-
 }

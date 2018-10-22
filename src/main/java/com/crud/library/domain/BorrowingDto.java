@@ -12,8 +12,8 @@ public class BorrowingDto {
     private int id;
     private LocalDate borrowDate;
     private LocalDate returnDate;
-    private Copy copy;
-    private Reader reader;
+    private CopyDto copy;
+    private ReaderDto reader;
 
     public BorrowingDto(LocalDate borrowDate) {
         this.borrowDate = borrowDate;

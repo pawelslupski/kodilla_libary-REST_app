@@ -1,6 +1,5 @@
 package com.crud.library.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

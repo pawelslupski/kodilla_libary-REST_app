@@ -74,8 +74,7 @@ public final class Reader {
         this.accCreated = accCreated;
     }
 
-    public void setBorrowings(List<Borrowing> borrowings) {
+    private void setBorrowings(List<Borrowing> borrowings) {
         this.borrowings = borrowings;
     }
-
 }

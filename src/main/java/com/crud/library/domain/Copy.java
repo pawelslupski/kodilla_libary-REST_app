@@ -42,7 +42,7 @@ public final class Copy {
         this.status = status;
     }
 
-    public void setTitle(Title title) {
+    private void setTitle(Title title) {
         this.title = title;
     }
 }

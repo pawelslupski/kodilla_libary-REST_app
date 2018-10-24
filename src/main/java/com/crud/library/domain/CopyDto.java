@@ -12,5 +12,5 @@ import lombok.Setter;
 public class CopyDto {
     private int id;
     private String status;
-    private TitleDto titleDto;
+    private TitleDto title;
 }

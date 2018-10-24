@@ -1,5 +1,6 @@
 package com.crud.library.controller;
 
+import com.crud.library.domain.Copy;
 import com.crud.library.domain.CopyDto;
 import com.crud.library.domain.ReaderDto;
 import com.crud.library.domain.TitleDto;
@@ -10,6 +11,10 @@ import com.crud.library.mapper.TitleMapper;
 import com.crud.library.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -39,6 +44,21 @@ public class LibraryController {
     @RequestMapping(method = RequestMethod.POST, value = "createCopy", consumes = APPLICATION_JSON_VALUE)
     public void createCopy(@RequestBody CopyDto copyDto) {
         service.saveCopy(copyMapper.mapToCopy(copyDto));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getCopies")
+    public List<CopyDto> getCopies() {
+        return copyMapper.mapToCopyDtoList(service.getAllCopies());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getCopiesByStatus")
+    public List<CopyDto> getCopiesByTitleAndStatus(@RequestParam String status) {
+        return copyMapper.mapToCopyDtoList(service.getCopiesByStatus(status));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getAvailableCopiesBasedOnTitle")
+    public List<CopyDto> getAllAvailableCopiesBasedOnTitle(@RequestParam String title) {
+        return copyMapper.mapToCopyDtoList(service.getAvailableCopiesWithTitle(title));
     }
 }
 

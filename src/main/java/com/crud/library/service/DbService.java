@@ -9,6 +9,8 @@ import com.crud.library.repository.TitleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DbService {
     @Autowired
@@ -30,4 +32,15 @@ public class DbService {
         return copyDao.save(copy);
     }
 
+    public List<Copy> getAllCopies() {
+        return copyDao.findAll();
+    }
+
+    public List<Copy> getCopiesByStatus(String status) {
+        return copyDao.findByStatus(status);
+    }
+
+    public List<Copy> getAvailableCopiesWithTitle(String title) {
+        return copyDao.retrieveAvailableCopiesWithTitle(title);
+    }
 }

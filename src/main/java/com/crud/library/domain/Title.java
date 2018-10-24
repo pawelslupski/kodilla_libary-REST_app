@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(name = "TITLE")
+@Table(name = "TITLES")
 public final class Title {
     private int id;
     private String title;

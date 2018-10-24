@@ -3,13 +3,20 @@ package com.crud.library.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-
-@NamedNativeQuery(
-        name = "Copy.retrieveAvailableCopiesWithTitle",
-        query = "SELECT * FROM COPY" +
-                " WHERE STATUS LIKE 'Available' && TITLE_ID IN (SELECT TITLE_ID " +
-                "FROM TITLES WHERE TITLE LIKE :ARG)",
-        resultClass = Copy.class)
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "Copy.retrieveAvailableCopiesWithTitle",
+                query = "SELECT * FROM COPY " +
+                        "WHERE STATUS LIKE 'Available' && TITLE_ID IN (SELECT TITLE_ID " +
+                        "FROM TITLES WHERE TITLE LIKE :ARG)",
+                resultClass = Copy.class),
+        @NamedNativeQuery(
+                name = "Copy.retrieveAllCopiesWithTitle",
+                query = "SELECT * FROM COPY " +
+                        "WHERE TITLE_ID IN (SELECT TITLE_ID " +
+                        "FROM TITLES WHERE TITLE LIKE :ARG)",
+                resultClass = Copy.class),
+})
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(name = "COPY")

@@ -1,5 +1,6 @@
 package com.crud.library.controller;
 
+import com.crud.library.domain.Copy;
 import com.crud.library.domain.CopyDto;
 import com.crud.library.domain.ReaderDto;
 import com.crud.library.domain.TitleDto;
@@ -11,7 +12,6 @@ import com.crud.library.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -53,9 +53,24 @@ public class LibraryController {
         return copyMapper.mapToCopyDtoList(service.getCopiesByStatus(status));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "getAllCopiesBasedOnTitle")
+    public List<CopyDto> getAllCopiesBasedOnTitle(@RequestParam String title) {
+        return copyMapper.mapToCopyDtoList(service.getAllCopiesWithTitle(title));
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "getAvailableCopiesBasedOnTitle")
     public List<CopyDto> getAllAvailableCopiesBasedOnTitle(@RequestParam String title) {
         return copyMapper.mapToCopyDtoList(service.getAvailableCopiesWithTitle(title));
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getNumberOfAvailableCopiesBasedOnTitle")
+    public long getNumberOfAvailableCopiesBasedOnTitle(@RequestParam String title) {
+        return service.countAllAvailableCopiesWithTitle(title);
+    }
+
+    /*@RequestMapping(method = RequestMethod.PUT, value = "updateCopyStatus")
+    public CopyDto updateCopyStatus(@RequestBody CopyDto copyDto) {
+        return copyMapper.mapToCopyDto(service.saveCopy(copyMapper.mapToCopy(copyDto)));
+    }*/
 }
 

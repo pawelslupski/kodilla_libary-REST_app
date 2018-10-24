@@ -17,8 +17,16 @@ public interface CopyDao extends CrudRepository<Copy, Integer> {
     List<Copy> findByStatus(String status);
 
     @Query(nativeQuery = true)
+    List<Copy> retrieveAllCopiesWithTitle(@Param("ARG") String title);
+
+    @Query(nativeQuery = true)
     List<Copy> retrieveAvailableCopiesWithTitle(@Param("ARG") String title);
 
     @Override
     List<Copy> findAll();
+
+    /*@Query(nativeQuery = true)
+    long countAllAvailableCopiesWithTitle(@Param("ARG") String title);*/
+
+    long countCopiesByStatus(String status);
 }

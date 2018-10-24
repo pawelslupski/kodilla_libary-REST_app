@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class DbService {
+    public final static String AVAILABLE = "Available";
     @Autowired
     private ReaderDao readerDao;
     @Autowired
@@ -42,5 +43,21 @@ public class DbService {
 
     public List<Copy> getAvailableCopiesWithTitle(String title) {
         return copyDao.retrieveAvailableCopiesWithTitle(title);
+    }
+
+    public List<Copy> getAllCopiesWithTitle(String title) {
+        return copyDao.retrieveAllCopiesWithTitle(title);
+    }
+
+    public long countAllAvailableCopiesWithStatus(String status) {
+        return copyDao.countCopiesByStatus(status);
+    }
+
+    public long countAllAvailableCopiesWithTitle(String title) {
+        List<Copy> listOfAllAvailableCopies = copyDao.findByStatus(AVAILABLE);
+        return listOfAllAvailableCopies.stream()
+                .map(c -> c.getTitle())
+                .filter(t -> t.getTitle().equals(title))
+                .count();
     }
 }

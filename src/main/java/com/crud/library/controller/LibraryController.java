@@ -40,6 +40,5 @@ public class LibraryController {
     public void createCopy(@RequestBody CopyDto copyDto) {
         service.saveCopy(copyMapper.mapToCopy(copyDto));
     }
-
 }
 

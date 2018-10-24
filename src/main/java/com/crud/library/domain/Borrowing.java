@@ -5,10 +5,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@Access(AccessType.PROPERTY)
 @Table(name = "BORROWING")
 public final class Borrowing {
     private int id;
+    @Temporal(TemporalType.DATE)
     private LocalDate borrowDate;
+    @Temporal(TemporalType.DATE)
     private LocalDate returnDate;
     private Copy copy;
     private Reader reader;
@@ -21,7 +24,7 @@ public final class Borrowing {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @NotNull
     @Column(name = "ID", unique = true)
     public int getId() {
@@ -71,5 +74,4 @@ public final class Borrowing {
     public void setReader(Reader reader) {
         this.reader = reader;
     }
-
 }

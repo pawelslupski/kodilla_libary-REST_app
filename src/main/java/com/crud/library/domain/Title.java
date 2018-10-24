@@ -1,13 +1,12 @@
 package com.crud.library.domain;
 
-import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 @Entity
+@Access(AccessType.PROPERTY)
 @Table(name = "TITLE")
 public final class Title {
     private int id;
@@ -16,8 +15,17 @@ public final class Title {
     private int published;
     private List<Copy> copies = new ArrayList<>();
 
+    public Title() {
+    }
+
     public Title(int id, String title, String author, int published) {
         this.id = id;
+        this.title = title;
+        this.author = author;
+        this.published = published;
+    }
+
+    public Title(String title, String author, int published) {
         this.title = title;
         this.author = author;
         this.published = published;

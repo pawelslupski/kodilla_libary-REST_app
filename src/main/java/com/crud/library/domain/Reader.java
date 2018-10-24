@@ -7,11 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Access(AccessType.PROPERTY)
 @Table(name = "READER")
 public final class Reader {
     private int id;
     private String firstName;
     private String lastName;
+    @Temporal(TemporalType.DATE)
     private Date accCreated;
     private List<Borrowing> borrowings = new ArrayList<>();
 

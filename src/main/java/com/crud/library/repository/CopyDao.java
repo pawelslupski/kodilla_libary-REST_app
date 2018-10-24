@@ -10,7 +10,4 @@ import javax.transaction.Transactional;
 public interface CopyDao extends CrudRepository<Copy, Integer> {
     @Override
     Copy save(Copy copy);
-
-    Long countAllByTitleAndStatus(String title, String status);
-
 }

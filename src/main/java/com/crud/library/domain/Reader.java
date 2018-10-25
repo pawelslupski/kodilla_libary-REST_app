@@ -13,14 +13,13 @@ public final class Reader {
     private int id;
     private String firstName;
     private String lastName;
-    @Temporal(TemporalType.DATE)
     private Date accCreated;
     private List<Borrowing> borrowings = new ArrayList<>();
 
     public Reader() {
     }
 
-    public Reader(String firstName, String lastName) {
+    public Reader(int id, String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.accCreated = new Date();
@@ -46,6 +45,7 @@ public final class Reader {
 
     @NotNull
     @Column(name = "ACC_CREATED")
+    @Temporal(TemporalType.DATE)
     public Date getAccCreated() {
         return accCreated;
     }

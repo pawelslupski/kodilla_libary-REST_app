@@ -28,7 +28,8 @@ public final class Copy {
     public Copy() {
     }
 
-    public Copy(String status, Title title) {
+    public Copy(int id, String status, Title title) {
+        this.id = id;
         this.status = status;
         this.title = title;
     }
@@ -57,7 +58,7 @@ public final class Copy {
         this.id = id;
     }
 
-    private void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -14,6 +14,8 @@ public interface CopyDao extends CrudRepository<Copy, Integer> {
     @Override
     Copy save(Copy copy);
 
+    Copy findById(int id);
+
     List<Copy> findByStatus(String status);
 
     @Query(nativeQuery = true)
@@ -24,9 +26,6 @@ public interface CopyDao extends CrudRepository<Copy, Integer> {
 
     @Override
     List<Copy> findAll();
-
-    /*@Query(nativeQuery = true)
-    long countAllAvailableCopiesWithTitle(@Param("ARG") String title);*/
 
     long countCopiesByStatus(String status);
 }

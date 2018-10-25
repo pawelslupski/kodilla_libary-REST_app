@@ -25,5 +25,4 @@ public class LocalDateAttributeConverter implements AttributeConverter<LocalDate
             return null;
         }
     }
-
 }

@@ -49,15 +49,18 @@ public class DbService {
         return copyDao.retrieveAllCopiesWithTitle(title);
     }
 
-    public long countAllAvailableCopiesWithStatus(String status) {
-        return copyDao.countCopiesByStatus(status);
-    }
-
     public long countAllAvailableCopiesWithTitle(String title) {
         List<Copy> listOfAllAvailableCopies = copyDao.findByStatus(AVAILABLE);
         return listOfAllAvailableCopies.stream()
                 .map(c -> c.getTitle())
                 .filter(t -> t.getTitle().equals(title))
                 .count();
+    }
+
+    public Copy getCopyByIdAndAlterStatus(int id, String status) {
+        Copy copy = copyDao.findById(id);
+        copy.setStatus(status);
+        copyDao.save(copy);
+        return copy;
     }
 }

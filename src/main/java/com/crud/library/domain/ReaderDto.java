@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReaderDto {
+    private int id;
     private String firstName;
     private String lastName;
 }

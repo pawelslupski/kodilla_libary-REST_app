@@ -68,9 +68,15 @@ public class LibraryController {
         return service.countAllAvailableCopiesWithTitle(title);
     }
 
-    /*@RequestMapping(method = RequestMethod.PUT, value = "updateCopyStatus")
+    @RequestMapping(method = RequestMethod.PUT, value = "updateCopyStatus")
     public CopyDto updateCopyStatus(@RequestBody CopyDto copyDto) {
         return copyMapper.mapToCopyDto(service.saveCopy(copyMapper.mapToCopy(copyDto)));
-    }*/
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "updateCopyStatus2")
+    public CopyDto updateCopyStatus(@RequestParam int id, String status) {
+        return copyMapper.mapToCopyDto(service.getCopyByIdAndAlterStatus(id, status));
+    }
 }
+
 

@@ -1,5 +1,7 @@
 package com.crud.library.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public final class Reader {
     }
 
     public Reader(int id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.accCreated = new Date();
@@ -56,6 +59,7 @@ public final class Reader {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
+    @JsonManagedReference
     public List<Borrowing> getBorrowings() {
         return borrowings;
     }
@@ -76,7 +80,11 @@ public final class Reader {
         this.accCreated = accCreated;
     }
 
-    private void setBorrowings(List<Borrowing> borrowings) {
+    public void setBorrowings(List<Borrowing> borrowings) {
         this.borrowings = borrowings;
+    }
+
+    public void addBorrowing(Borrowing borrowing) {
+        borrowings.add(borrowing);
     }
 }

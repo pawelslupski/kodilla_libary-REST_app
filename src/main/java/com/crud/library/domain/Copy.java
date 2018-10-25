@@ -1,5 +1,7 @@
 package com.crud.library.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -50,6 +52,7 @@ public final class Copy {
 
     @ManyToOne
     @JoinColumn(name = "TITLE_ID")
+    @JsonBackReference
     public Title getTitle() {
         return title;
     }

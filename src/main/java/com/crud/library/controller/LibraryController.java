@@ -1,9 +1,6 @@
 package com.crud.library.controller;
 
-import com.crud.library.domain.Copy;
-import com.crud.library.domain.CopyDto;
-import com.crud.library.domain.ReaderDto;
-import com.crud.library.domain.TitleDto;
+import com.crud.library.domain.*;
 import com.crud.library.mapper.BorrowingMapper;
 import com.crud.library.mapper.CopyMapper;
 import com.crud.library.mapper.ReaderMapper;
@@ -43,6 +40,11 @@ public class LibraryController {
         service.saveCopy(copyMapper.mapToCopy(copyDto));
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "borrowTheCopy")
+    public ReaderDto borrowTheCopy(@RequestParam int readerId, String copyTitle) {
+        return readerMapper.mapToReaderDto(service.borrowTheCopy(readerId, copyTitle));
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "getCopies")
     public List<CopyDto> getCopies() {
         return copyMapper.mapToCopyDtoList(service.getAllCopies());
@@ -69,13 +71,8 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateCopyStatus")
-    public CopyDto updateCopyStatus(@RequestBody CopyDto copyDto) {
-        return copyMapper.mapToCopyDto(service.saveCopy(copyMapper.mapToCopy(copyDto)));
-    }
-
-    @RequestMapping(method = RequestMethod.PUT, value = "updateCopyStatus2")
     public CopyDto updateCopyStatus(@RequestParam int id, String status) {
-        return copyMapper.mapToCopyDto(service.getCopyByIdAndAlterStatus(id, status));
+        return copyMapper.mapToCopyDto(service.getCopyByIdAndChangeStatus(id, status));
     }
 }
 

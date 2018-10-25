@@ -1,30 +1,39 @@
 package com.crud.library.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(name = "BORROWING")
 public final class Borrowing {
     private int id;
-    @Temporal(TemporalType.DATE)
-    private LocalDate borrowDate;
-    @Temporal(TemporalType.DATE)
-    private LocalDate returnDate;
+    private Date borrowDate;
+    private Date returnDate;
     private Copy copy;
     private Reader reader;
 
     public Borrowing() {
     }
 
-    public Borrowing(LocalDate borrowDate) {
-        this.borrowDate = borrowDate;
+    public Borrowing(int id, Copy copy, Reader reader) {
+        this.id = id;
+        this.borrowDate = new Date();
+        this.copy = copy;
+        this.reader = reader;
+    }
+
+    public Borrowing(Copy copy, Reader reader) {
+        this.borrowDate = new Date();
+        this.copy = copy;
+        this.reader = reader;
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "ID", unique = true)
     public int getId() {
@@ -33,24 +42,29 @@ public final class Borrowing {
 
     @NotNull
     @Column(name = "BORROW_DATE")
-    public LocalDate getBorrowDate() {
+    @Temporal(TemporalType.DATE)
+    public Date getBorrowDate() {
         return borrowDate;
     }
 
     @Column(name = "RETURN_DATE")
-    public LocalDate getReturnDate() {
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    public Date getReturnDate() {
         return returnDate;
     }
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "COPY_ID")
     public Copy getCopy() {
         return copy;
     }
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "READER_ID")
+    @JsonBackReference
     public Reader getReader() {
         return reader;
     }
@@ -59,11 +73,11 @@ public final class Borrowing {
         this.id = id;
     }
 
-    public void setBorrowDate(LocalDate borrowDate) {
+    public void setBorrowDate(Date borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 

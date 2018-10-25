@@ -11,4 +11,5 @@ public interface ReaderDao extends CrudRepository<Reader, Integer> {
     @Override
     Reader save(Reader reader);
 
+    Reader findById(int id);
 }

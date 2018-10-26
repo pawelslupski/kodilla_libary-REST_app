@@ -28,6 +28,12 @@ public final class Reader {
         this.accCreated = new Date();
     }
 
+    public Reader(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.accCreated = new Date();
+    }
+
     @Id
     @GeneratedValue
     @NotNull

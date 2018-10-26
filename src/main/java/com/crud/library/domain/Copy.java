@@ -36,6 +36,11 @@ public final class Copy {
         this.title = title;
     }
 
+    public Copy(String status, Title title) {
+        this.status = Status.valueOf(status);
+        this.title = title;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -66,7 +71,7 @@ public final class Copy {
         this.status = status;
     }
 
-    private void setTitle(Title title) {
+    public void setTitle(Title title) {
         this.title = title;
     }
 }

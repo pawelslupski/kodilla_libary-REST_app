@@ -1,9 +1,6 @@
 package com.crud.library.service;
 
-import com.crud.library.domain.Borrowing;
-import com.crud.library.domain.Copy;
-import com.crud.library.domain.Reader;
-import com.crud.library.domain.Title;
+import com.crud.library.domain.*;
 import com.crud.library.repository.BorrowingDao;
 import com.crud.library.repository.CopyDao;
 import com.crud.library.repository.ReaderDao;
@@ -74,7 +71,7 @@ public class DbService {
 
     public Copy getCopyByIdAndChangeStatus(int id, String status) {
         Copy copy = copyDao.findById(id);
-        copy.setStatus(status);
+        copy.setStatus(Status.valueOf(status));
         copyDao.save(copy);
         return copy;
     }
@@ -84,7 +81,7 @@ public class DbService {
         List<Copy> availableCopiesWithTitle = copyDao.retrieveAvailableCopiesWithTitle(searchTitle);
         if (availableCopiesWithTitle.size() > 0) {
             Copy theCopy = availableCopiesWithTitle.get(0);
-            theCopy.setStatus(BORROWED);
+            theCopy.setStatus(Status.BORROWED);
             Borrowing borrowing = new Borrowing(theCopy, reader);
             borrowing.setReader(reader);
             reader.getBorrowings().add(borrowing);
@@ -101,7 +98,7 @@ public class DbService {
     public Borrowing returnTheCopy(int copyId) {
         Borrowing borrowing = borrowingDao.findByCopy_Id(copyId);
         borrowing.setReturnDate(new Date());
-        borrowing.getCopy().setStatus(AVAILABLE);
+        borrowing.getCopy().setStatus(Status.AVAILABLE);
         Reader reader = borrowing.getReader();
         reader.getBorrowings().remove(borrowing);
         readerDao.save(reader);

@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "COPY")
 public final class Copy {
     private int id;
-    private String status;
+    private Status status;
     private Title title;
 
     public Copy() {
@@ -32,7 +32,7 @@ public final class Copy {
 
     public Copy(int id, String status, Title title) {
         this.id = id;
-        this.status = status;
+        this.status = Status.valueOf(status);
         this.title = title;
     }
 
@@ -45,8 +45,9 @@ public final class Copy {
     }
 
     @NotNull
-    @Column(name = "STATUS")
-    public String getStatus() {
+    @Column(name = "STATUS", columnDefinition = "enum('AVAILABLE','BORROWED','LOST')")
+    @Enumerated(EnumType.STRING)
+    public Status getStatus() {
         return status;
     }
 
@@ -61,7 +62,7 @@ public final class Copy {
         this.id = id;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

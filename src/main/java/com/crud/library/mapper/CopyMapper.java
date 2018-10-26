@@ -4,7 +4,6 @@ import com.crud.library.domain.Copy;
 import com.crud.library.domain.CopyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,13 +18,14 @@ public class CopyMapper {
     }
 
     public CopyDto mapToCopyDto(final Copy copy) {
-        return new CopyDto(copy.getId(), copy.getStatus(),
+        return new CopyDto(copy.getId(), copy.getStatus().getDescription(),
                 titleMapper.mapToTitleDto(copy.getTitle()));
     }
 
     public List<CopyDto> mapToCopyDtoList(final List<Copy> copyList) {
         return copyList.stream()
-                .map(c -> new CopyDto(c.getId(), c.getStatus(), titleMapper.mapToTitleDto(c.getTitle())))
+                .map(c -> new CopyDto(c.getId(), c.getStatus().getDescription(),
+                        titleMapper.mapToTitleDto(c.getTitle())))
                 .collect(Collectors.toList());
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +30,10 @@ public class DbService {
 
     public Reader saveReader(final Reader reader) {
         return readerDao.save(reader);
+    }
+
+    public Reader getReaderById(int readerId) {
+        return readerDao.findById(readerId);
     }
 
     public Borrowing saveBorrowing(final Borrowing borrowing) {
@@ -74,7 +79,7 @@ public class DbService {
         return copy;
     }
 
-    public Reader borrowTheCopy (int readerId, String searchTitle) {
+    public Reader borrowTheCopy(int readerId, String searchTitle) {
         Reader reader = readerDao.findById(readerId);
         List<Copy> availableCopiesWithTitle = copyDao.retrieveAvailableCopiesWithTitle(searchTitle);
         if (availableCopiesWithTitle.size() > 0) {
@@ -87,5 +92,20 @@ public class DbService {
             return reader;
         }
         return reader;
+    }
+
+    public Borrowing getTheBorrowingByCopyId(int copyId) {
+        return borrowingDao.findByCopy_Id(copyId);
+        }
+
+    public Borrowing returnTheCopy(int copyId) {
+        Borrowing borrowing = borrowingDao.findByCopy_Id(copyId);
+        borrowing.setReturnDate(new Date());
+        borrowing.getCopy().setStatus(AVAILABLE);
+        Reader reader = borrowing.getReader();
+        reader.getBorrowings().remove(borrowing);
+        readerDao.save(reader);
+
+        return borrowing;
     }
 }

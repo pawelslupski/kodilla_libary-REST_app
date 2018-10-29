@@ -17,5 +17,5 @@ public interface BorrowingDao extends CrudRepository<Borrowing, Integer> {
 
     void deleteById(Long id);
 
-    Borrowing findByCopy_Id(int copyId);
+    List<Borrowing> findByCopy_Id(int copyId);
 }

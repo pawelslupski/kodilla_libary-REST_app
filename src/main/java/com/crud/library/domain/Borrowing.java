@@ -62,7 +62,7 @@ public final class Borrowing {
     }
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "READER_ID")
     @JsonBackReference
     public Reader getReader() {

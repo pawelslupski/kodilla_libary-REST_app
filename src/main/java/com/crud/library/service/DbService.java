@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DbService {
@@ -91,12 +92,18 @@ public class DbService {
         return reader;
     }
 
-    public Borrowing getTheBorrowingByCopyId(int copyId) {
-        return borrowingDao.findByCopy_Id(copyId);
-        }
+    public List<Borrowing> getTheBorrowingsByCopyId(int copyId) {
+        return borrowingDao.findByCopy_Id(copyId); }
 
     public Borrowing returnTheCopy(int copyId) {
-        Borrowing borrowing = borrowingDao.findByCopy_Id(copyId);
+        List<Borrowing> listOfBorrowing = borrowingDao.findByCopy_Id(copyId);
+        List<Borrowing> currentlyNotReturnedBorrowing = listOfBorrowing.stream()
+                .filter(borrowing -> borrowing.getReturnDate() == null)
+                .collect(Collectors.toList());
+        if(currentlyNotReturnedBorrowing.size() != 1) {
+            throw new IllegalStateException();
+        }
+        Borrowing borrowing = currentlyNotReturnedBorrowing.get(0);
         borrowing.setReturnDate(new Date());
         borrowing.getCopy().setStatus(Status.AVAILABLE);
         Reader reader = borrowing.getReader();

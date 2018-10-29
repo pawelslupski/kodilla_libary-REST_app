@@ -55,9 +55,9 @@ public class LibraryController {
         return readerMapper.mapToReaderDto(service.getReaderById(readerId));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBorrowingByCopyId")
-    public BorrowingDto getBorrowingByCopyId(@RequestParam int copyId) {
-        return borrowingMapper.mapToBorrowingDto(service.getTheBorrowingByCopyId(copyId));
+    @RequestMapping(method = RequestMethod.GET, value = "getBorrowingsByCopyId")
+    public List<BorrowingDto> getBorrowingsByCopyId(@RequestParam int copyId) {
+        return borrowingMapper.mapToBorrowingDtoList(service.getTheBorrowingsByCopyId(copyId));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getCopies")

@@ -30,12 +30,12 @@ public final class Copy {
 
     public Copy(int id, String status, Title title) {
         this.id = id;
-        this.status = Status.valueOf(status);
+        this.status = Status.valueOf(status.toUpperCase());
         this.title = title;
     }
 
     public Copy(String status, Title title) {
-        this.status = Status.valueOf(status);
+        this.status = Status.valueOf(status.toUpperCase());
         this.title = title;
     }
 

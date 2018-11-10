@@ -72,7 +72,7 @@ public class DbService {
 
     public Copy getCopyByIdAndChangeStatus(int id, String status) {
         Copy copy = copyDao.findById(id);
-        copy.setStatus(Status.valueOf(status));
+        copy.setStatus(Status.valueOf(status.toUpperCase()));
         copyDao.save(copy);
         return copy;
     }

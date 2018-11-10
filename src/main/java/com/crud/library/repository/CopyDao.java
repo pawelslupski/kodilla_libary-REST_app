@@ -1,6 +1,7 @@
 package com.crud.library.repository;
 
 import com.crud.library.domain.Copy;
+import com.crud.library.domain.Status;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +17,7 @@ public interface CopyDao extends CrudRepository<Copy, Integer> {
 
     Copy findById(int id);
 
-    List<Copy> findByStatus(String status);
+    List<Copy> findByStatus(Status status);
 
     @Query(nativeQuery = true)
     List<Copy> retrieveAllCopiesWithTitle(@Param("ARG") String title);
@@ -26,6 +27,4 @@ public interface CopyDao extends CrudRepository<Copy, Integer> {
 
     @Override
     List<Copy> findAll();
-
-    long countCopiesByStatus(String status);
 }

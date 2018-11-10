@@ -51,7 +51,7 @@ public class DbService {
     }
 
     public List<Copy> getCopiesByStatus(String status) {
-        return copyDao.findByStatus(status);
+        return copyDao.findByStatus(Status.valueOf(status));
     }
 
     public List<Copy> getAvailableCopiesWithTitle(String title) {
@@ -63,7 +63,7 @@ public class DbService {
     }
 
     public long countAllAvailableCopiesWithTitle(String title) {
-        List<Copy> listOfAllAvailableCopies = copyDao.findByStatus(AVAILABLE);
+        List<Copy> listOfAllAvailableCopies = copyDao.findByStatus(Status.AVAILABLE);
         return listOfAllAvailableCopies.stream()
                 .map(c -> c.getTitle())
                 .filter(t -> t.getTitle().equals(title))

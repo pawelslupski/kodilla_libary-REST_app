@@ -1,7 +1,6 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;

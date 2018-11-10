@@ -1,7 +1,7 @@
 package com.crud.library.domain;
 
 public enum Status {
-    AVAILABLE("Available"), BORROWED("Borrowed"), LOST("Lost");
+    AVAILABLE("AVAILABLE"), BORROWED("BORROWED"), LOST("LOST");
 
     private String description;
 

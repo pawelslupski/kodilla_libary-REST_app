@@ -67,15 +67,15 @@ public class BorrowingDaoTestSuite {
         readerDao.save(reader);
         borrowingDao.save(borrowing);
         //Then
-        int id = copy.getId();
+        int id = title.getId();
         int id2 = borrowing.getId();
         int id3 = reader.getId();
         List<Borrowing> readBorrowings = borrowingDao.findByCopy_Id(id);
         assertEquals(1, readBorrowings.size());
 
         //Cleanup
-        borrowingDao.delete(id);
-        titleDao.delete(id2);
+        borrowingDao.delete(id2);
+        titleDao.delete(id);
         readerDao.delete(id3);
     }
 }

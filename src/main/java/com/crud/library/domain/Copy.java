@@ -1,6 +1,7 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
                         "FROM TITLES WHERE TITLE LIKE :ARG)",
                 resultClass = Copy.class),
 })
+@NoArgsConstructor
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(name = "COPY")
@@ -25,9 +27,6 @@ public final class Copy {
     private int id;
     private Status status;
     private Title title;
-
-    public Copy() {
-    }
 
     public Copy(int id, String status, Title title) {
         this.id = id;

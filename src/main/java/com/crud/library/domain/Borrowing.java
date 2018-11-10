@@ -2,10 +2,12 @@ package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@NoArgsConstructor
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(name = "BORROWING")
@@ -15,9 +17,6 @@ public final class Borrowing {
     private Date returnDate;
     private Copy copy;
     private Reader reader;
-
-    public Borrowing() {
-    }
 
     public Borrowing(int id, Copy copy, Reader reader) {
         this.id = id;

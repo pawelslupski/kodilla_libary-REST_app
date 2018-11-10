@@ -1,5 +1,6 @@
 package com.crud.library.service;
 
+import com.crud.library.controller.ReaderNotFoundException;
 import com.crud.library.domain.*;
 import com.crud.library.repository.BorrowingDao;
 import com.crud.library.repository.CopyDao;
@@ -7,10 +8,9 @@ import com.crud.library.repository.ReaderDao;
 import com.crud.library.repository.TitleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +30,7 @@ public class DbService {
         return readerDao.save(reader);
     }
 
-    public Reader getReaderById(int readerId) {
+    public Optional<Reader> getReaderById(int readerId) {
         return readerDao.findById(readerId);
     }
 
@@ -77,8 +77,11 @@ public class DbService {
         return copy;
     }
 
-    public Reader borrowTheCopy(int readerId, String searchTitle) {
-        Reader reader = readerDao.findById(readerId);
+    public Reader borrowTheCopy(int readerId, String searchTitle) throws ReaderNotFoundException {
+        Optional<Reader> optionalReader = readerDao.findById(readerId);
+        optionalReader.orElseThrow(() ->
+                new ReaderNotFoundException("There i no reader with this id in database"));
+        Reader reader = optionalReader.get();
         List<Copy> availableCopiesWithTitle = copyDao.retrieveAvailableCopiesWithTitle(searchTitle);
         if (availableCopiesWithTitle.size() > 0) {
             Copy theCopy = availableCopiesWithTitle.get(0);

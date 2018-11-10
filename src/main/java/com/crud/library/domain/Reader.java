@@ -1,12 +1,14 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@NoArgsConstructor
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(name = "READER")
@@ -16,9 +18,6 @@ public final class Reader {
     private String lastName;
     private Date accCreated;
     private List<Borrowing> borrowings = new ArrayList<>();
-
-    public Reader() {
-    }
 
     public Reader(int id, String firstName, String lastName) {
         this.id = id;

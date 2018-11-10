@@ -41,7 +41,7 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "borrowTheCopy")
-    public ReaderDto borrowTheCopy(@RequestParam int readerId, String copyTitle) {
+    public ReaderDto borrowTheCopy(@RequestParam int readerId, String copyTitle) throws ReaderNotFoundException {
         return readerMapper.mapToReaderDto(service.borrowTheCopy(readerId, copyTitle));
     }
 
@@ -51,8 +51,9 @@ public class LibraryController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getReaderById")
-    public ReaderDto getReaderById(@RequestParam int readerId) {
-        return readerMapper.mapToReaderDto(service.getReaderById(readerId));
+    public ReaderDto getReaderById(@RequestParam int readerId) throws ReaderNotFoundException {
+        return readerMapper.mapToReaderDto(service.getReaderById(readerId).orElseThrow(() ->
+        new ReaderNotFoundException("There is no reader with this id in database")));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBorrowingsByCopyId")

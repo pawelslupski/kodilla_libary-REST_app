@@ -1,11 +1,13 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(name = "TITLES")
@@ -15,9 +17,6 @@ public final class Title {
     private String author;
     private int published;
     private List<Copy> copies = new ArrayList<>();
-
-    public Title() {
-    }
 
     public Title(int id, String title, String author, int published) {
         this.id = id;

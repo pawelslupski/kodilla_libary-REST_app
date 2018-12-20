@@ -1,6 +1,7 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,54 +9,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Data
 @NoArgsConstructor
 @Entity
-@Access(AccessType.PROPERTY)
+@Access(AccessType.FIELD)
 @Table(name = "READER")
 public final class Reader {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private Date accCreated;
-    private List<Borrowing> borrowings = new ArrayList<>();
-
-    public Reader(int id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.accCreated = new Date();
-    }
-
-    public Reader(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.accCreated = new Date();
-    }
-
     @Id
     @GeneratedValue
     @NotNull
     @Column(name = "ID", unique = true)
-    public int getId() {
-        return id;
-    }
+    private int id;
 
     @Column(name = "FIRSTNAME")
-    public String getFirstName() {
-        return firstName;
-    }
+    private String firstName;
 
     @Column(name = "LASTNAME")
-    public String getLastName() {
-        return lastName;
-    }
+    private String lastName;
 
     @NotNull
     @Column(name = "ACC_CREATED")
     @Temporal(TemporalType.DATE)
-    public Date getAccCreated() {
-        return accCreated;
-    }
+    private Date accCreated;
 
     @OneToMany(
             targetEntity = Borrowing.class,
@@ -64,28 +39,18 @@ public final class Reader {
             fetch = FetchType.LAZY
     )
     @JsonManagedReference
-    public List<Borrowing> getBorrowings() {
-        return borrowings;
-    }
+    private List<Borrowing> borrowings = new ArrayList<>();
 
-    private void setId(int id) {
+    public Reader(int id, String firstName, String lastName) {
+        this(firstName, lastName);
         this.id = id;
+        this.accCreated = new Date();
     }
 
-    private void setFirstName(String firstName) {
+    public Reader(String firstName, String lastName) {
         this.firstName = firstName;
-    }
-
-    private void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    private void setAccCreated(Date accCreated) {
-        this.accCreated = accCreated;
-    }
-
-    public void setBorrowings(List<Borrowing> borrowings) {
-        this.borrowings = borrowings;
+        this.accCreated = new Date();
     }
 
     public void addBorrowing(Borrowing borrowing) {

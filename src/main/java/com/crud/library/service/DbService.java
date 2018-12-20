@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class DbService {
-    public final static String AVAILABLE = "Available";
-    public final static String BORROWED = "Borrowed";
     @Autowired
     private ReaderDao readerDao;
     @Autowired
@@ -80,7 +78,7 @@ public class DbService {
     public Reader borrowTheCopy(int readerId, String searchTitle) throws ReaderNotFoundException {
         Optional<Reader> optionalReader = readerDao.findById(readerId);
         optionalReader.orElseThrow(() ->
-                new ReaderNotFoundException("There i no reader with this id in database"));
+                new ReaderNotFoundException("There is no reader with this id in database"));
         Reader reader = optionalReader.get();
         List<Copy> availableCopiesWithTitle = copyDao.retrieveAvailableCopiesWithTitle(searchTitle);
         if (availableCopiesWithTitle.size() > 0) {

@@ -1,6 +1,7 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,57 +20,35 @@ import javax.validation.constraints.NotNull;
                         "FROM TITLES WHERE TITLE LIKE :ARG)",
                 resultClass = Copy.class),
 })
+@Data
 @NoArgsConstructor
 @Entity
-@Access(AccessType.PROPERTY)
+@Access(AccessType.FIELD)
 @Table(name = "COPY")
 public final class Copy {
-    private int id;
-    private Status status;
-    private Title title;
-
-    public Copy(int id, String status, Title title) {
-        this.id = id;
-        this.status = Status.valueOf(status.toUpperCase());
-        this.title = title;
-    }
-
-    public Copy(String status, Title title) {
-        this.status = Status.valueOf(status.toUpperCase());
-        this.title = title;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "ID", unique = true)
-    public int getId() {
-        return id;
-    }
+    private int id;
 
     @NotNull
     @Column(name = "STATUS", columnDefinition = "enum('AVAILABLE','BORROWED','LOST')")
     @Enumerated(EnumType.STRING)
-    public Status getStatus() {
-        return status;
-    }
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "TITLE_ID")
     @JsonBackReference
-    public Title getTitle() {
-        return title;
-    }
+    private Title title;
 
-    private void setId(int id) {
+    public Copy(int id, String status, Title title) {
+        this(status, title);
         this.id = id;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public void setTitle(Title title) {
+    public Copy(String status, Title title) {
+        this.status = Status.valueOf(status.toUpperCase());
         this.title = title;
     }
 }

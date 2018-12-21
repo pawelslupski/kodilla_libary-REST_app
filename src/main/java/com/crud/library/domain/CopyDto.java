@@ -2,9 +2,10 @@ package com.crud.library.domain;
 
 import lombok.*;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
 public class CopyDto {
     private int id;
     private String status;

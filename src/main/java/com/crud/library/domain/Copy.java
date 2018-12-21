@@ -1,8 +1,7 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -10,18 +9,19 @@ import javax.validation.constraints.NotNull;
         @NamedNativeQuery(
                 name = "Copy.retrieveAvailableCopiesWithTitle",
                 query = "SELECT * FROM COPY " +
-                        "WHERE STATUS LIKE 'Available' && TITLE_ID IN (SELECT TITLE_ID " +
-                        "FROM TITLES WHERE TITLE LIKE :ARG)",
+                        "WHERE STATUS = 'AVAILABLE' && TITLE_ID IN (SELECT TITLE_ID " +
+                        "FROM TITLES WHERE TITLE = :ARG)",
                 resultClass = Copy.class),
         @NamedNativeQuery(
                 name = "Copy.retrieveAllCopiesWithTitle",
                 query = "SELECT * FROM COPY " +
                         "WHERE TITLE_ID IN (SELECT TITLE_ID " +
-                        "FROM TITLES WHERE TITLE LIKE :ARG)",
+                        "FROM TITLES WHERE TITLE = :ARG)",
                 resultClass = Copy.class),
 })
-@Data
 @NoArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "COPY")

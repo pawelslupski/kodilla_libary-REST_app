@@ -2,12 +2,12 @@ package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import java.util.Date;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
 public class BorrowingDto {
     private int id;
     private Date borrowDate;

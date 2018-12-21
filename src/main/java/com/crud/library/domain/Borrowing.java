@@ -2,14 +2,14 @@ package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Data
 @NoArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "BORROWING")

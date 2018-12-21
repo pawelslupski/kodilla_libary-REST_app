@@ -1,16 +1,16 @@
 package com.crud.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @NoArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "READER")

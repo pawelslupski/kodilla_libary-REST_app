@@ -32,10 +32,6 @@ public class DbService {
         return readerDao.findById(readerId);
     }
 
-    public Borrowing saveBorrowing(final Borrowing borrowing) {
-        return borrowingDao.save(borrowing);
-    }
-
     public Title saveTitle(final Title title) {
         return titleDao.save(title);
     }

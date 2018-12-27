@@ -27,4 +27,7 @@ public interface CopyDao extends CrudRepository<Copy, Integer> {
 
     @Override
     List<Copy> findAll();
+
+    @Override
+    long count();
 }

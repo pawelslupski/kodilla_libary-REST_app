@@ -13,4 +13,7 @@ public interface BorrowingDao extends CrudRepository<Borrowing, Integer> {
     Borrowing save(Borrowing borrowing);
 
     List<Borrowing> findByCopy_Id(int copyId);
+
+    @Override
+    long count();
 }

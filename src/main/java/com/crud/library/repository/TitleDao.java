@@ -10,4 +10,7 @@ import javax.transaction.Transactional;
 public interface TitleDao extends CrudRepository<Title, Integer> {
     @Override
     Title save(Title title);
+
+    @Override
+    long count();
 }

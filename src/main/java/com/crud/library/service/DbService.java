@@ -1,5 +1,6 @@
 package com.crud.library.service;
 
+import com.crud.library.config.AdminConfig;
 import com.crud.library.controller.ReaderNotFoundException;
 import com.crud.library.domain.*;
 import com.crud.library.repository.BorrowingDao;
@@ -12,9 +13,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import static java.util.Optional.ofNullable;
 
 @Service
 public class DbService {
+    private static final String MAIL_SUBJECT_READER_ADDED = "Library: New Reader";
+    private static final String MAIL_SUBJECT_TITLE_ADDED = "Library: New Title";
+    private static final String MAIL_SUBJECT_COPY_ADDED = "Library: New Copy";
+
     @Autowired
     private ReaderDao readerDao;
     @Autowired
@@ -23,9 +29,18 @@ public class DbService {
     private CopyDao copyDao;
     @Autowired
     private BorrowingDao borrowingDao;
+    @Autowired
+    private SimpleEmailService emailService;
+    @Autowired
+    private AdminConfig adminConfig;
 
     public Reader saveReader(final Reader reader) {
-        return readerDao.save(reader);
+        Reader newReader = readerDao.save(reader);
+        ofNullable(newReader).ifPresent(r -> emailService.send(new Mail(adminConfig.getAdminMail(),
+                MAIL_SUBJECT_READER_ADDED, "New Reader: [id:" + r.getId() + ", firstname: " +
+                r.getFirstName() + ", lastname: " + r.getLastName() + "] has been added to the " +
+                "database")));
+        return newReader;
     }
 
     public Optional<Reader> getReaderById(int readerId) {
@@ -33,11 +48,19 @@ public class DbService {
     }
 
     public Title saveTitle(final Title title) {
-        return titleDao.save(title);
+        Title newTitle = titleDao.save(title);
+        ofNullable(newTitle).ifPresent(t -> emailService.send(new Mail(adminConfig.getAdminMail(),
+                MAIL_SUBJECT_TITLE_ADDED, "New Title: [id:" + t.getId() + ", title: " +
+                t.getTitle() + ", author: " + t.getAuthor() + "] has been added to the database")));
+        return newTitle;
     }
 
     public Copy saveCopy(final Copy copy) {
-        return copyDao.save(copy);
+        Copy newCopy = copyDao.save(copy);
+        ofNullable(newCopy).ifPresent(c -> emailService.send(new Mail(adminConfig.getAdminMail(),
+                MAIL_SUBJECT_COPY_ADDED, "New Copy: [id:" + c.getId() + ", title: " + c.getTitle().getTitle() +
+                "] has been added to the database")));
+        return newCopy;
     }
 
     public List<Copy> getAllCopies() {

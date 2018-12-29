@@ -25,70 +25,71 @@ public class LibraryController {
     @Autowired
     private BorrowingMapper borrowingMapper;
 
-    @RequestMapping(method = RequestMethod.POST, value = "createReader", consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/readers", consumes = APPLICATION_JSON_VALUE)
     public void createReader(@RequestBody ReaderDto readerDto) {
         service.saveReader(readerMapper.mapToReader(readerDto));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createTitle", consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/titles", consumes = APPLICATION_JSON_VALUE)
     public void createTitle(@RequestBody TitleDto titleDto) {
         service.saveTitle(titleMapper.mapToTitle(titleDto));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createCopy", consumes = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/copies", consumes = APPLICATION_JSON_VALUE)
     public void createCopy(@RequestBody CopyDto copyDto) {
         service.saveCopy(copyMapper.mapToCopy(copyDto));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "borrowTheCopy")
-    public ReaderDto borrowTheCopy(@RequestParam int readerId, String copyTitle) throws ReaderNotFoundException {
-        return readerMapper.mapToReaderDto(service.borrowTheCopy(readerId, copyTitle));
-    }
+    @RequestMapping(method = RequestMethod.PUT, value = "/readers/{readerId}/borrow")
+    public ReaderDto borrowTheCopy(@PathVariable int readerId,
+                                   @RequestParam String copyTitle) throws ReaderNotFoundException {
+        return readerMapper.mapToReaderDto(service.borrowTheCopy(readerId, copyTitle)); }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "returnTheCopy")
-    public BorrowingDto returnTheCopy(@RequestParam int copyId) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/copies/return/{copyId}")
+    public BorrowingDto returnTheCopy(@PathVariable int copyId) {
         return borrowingMapper.mapToBorrowingDto(service.returnTheCopy(copyId));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getReaderById")
-    public ReaderDto getReaderById(@RequestParam int readerId) throws ReaderNotFoundException {
+    @RequestMapping(method = RequestMethod.GET, value = "/readers/{readerId}")
+    public ReaderDto getReaderById(@PathVariable int readerId) throws ReaderNotFoundException {
         return readerMapper.mapToReaderDto(service.getReaderById(readerId).orElseThrow(() ->
         new ReaderNotFoundException("There is no reader with this id in database")));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBorrowingsByCopyId")
-    public List<BorrowingDto> getBorrowingsByCopyId(@RequestParam int copyId) {
+    @RequestMapping(method = RequestMethod.GET, value = "/borrowings/{copyId}")
+    public List<BorrowingDto> getBorrowingsByCopyId(@PathVariable int copyId) {
         return borrowingMapper.mapToBorrowingDtoList(service.getTheBorrowingsByCopyId(copyId));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getCopies")
+    @RequestMapping(method = RequestMethod.GET, value = "/copies")
     public List<CopyDto> getCopies() {
         return copyMapper.mapToCopyDtoList(service.getAllCopies());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getCopiesByStatus")
-    public List<CopyDto> getCopiesByTitleAndStatus(@RequestParam String status) {
+    @RequestMapping(method = RequestMethod.GET, value = "/copies/status")
+    public List<CopyDto> getCopiesByStatus(@RequestParam String status) {
         return copyMapper.mapToCopyDtoList(service.getCopiesByStatus(status));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getAllCopiesBasedOnTitle")
+    @RequestMapping(method = RequestMethod.GET, value = "/copies/titles")
     public List<CopyDto> getAllCopiesBasedOnTitle(@RequestParam String title) {
         return copyMapper.mapToCopyDtoList(service.getAllCopiesWithTitle(title));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getAvailableCopiesBasedOnTitle")
+    @RequestMapping(method = RequestMethod.GET, value = "/copies/available/titles")
     public List<CopyDto> getAllAvailableCopiesBasedOnTitle(@RequestParam String title) {
         return copyMapper.mapToCopyDtoList(service.getAvailableCopiesWithTitle(title));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getNumberOfAvailableCopiesBasedOnTitle")
+    @RequestMapping(method = RequestMethod.GET, value = "/copies/available/count")
     public long getNumberOfAvailableCopiesBasedOnTitle(@RequestParam String title) {
         return service.countAllAvailableCopiesWithTitle(title);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateCopyStatus")
-    public CopyDto updateCopyStatus(@RequestParam int id, String status) {
-        return copyMapper.mapToCopyDto(service.getCopyByIdAndChangeStatus(id, status));
+    @RequestMapping(method = RequestMethod.PUT, value = "/copies/{copyId}")
+    public CopyDto updateCopyStatus(@PathVariable int copyId,
+                                    @RequestParam String status) {
+        return copyMapper.mapToCopyDto(service.getCopyByIdAndChangeStatus(copyId, status));
     }
 }
 

@@ -68,7 +68,7 @@ public class DbService {
     }
 
     public List<Copy> getCopiesByStatus(String status) {
-        return copyDao.findByStatus(Status.valueOf(status));
+        return copyDao.findByStatus(Status.valueOf(status.toUpperCase()));
     }
 
     public List<Copy> getAvailableCopiesWithTitle(String title) {

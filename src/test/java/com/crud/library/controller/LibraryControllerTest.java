@@ -63,7 +63,7 @@ public class LibraryControllerTest {
         when(readerMapper.mapToReader(readerDto)).thenReturn(reader);
 
         //When&Then
-        mockMvc.perform(post("/v1/library/createReader")
+        mockMvc.perform(post("/v1/library/readers")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -90,7 +90,7 @@ public class LibraryControllerTest {
         when(titleMapper.mapToTitle(titleDto)).thenReturn(title);
 
         //When&Then
-        mockMvc.perform(post("/v1/library/createTitle")
+        mockMvc.perform(post("/v1/library/titles")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -111,7 +111,7 @@ public class LibraryControllerTest {
         when(copyMapper.mapToCopy(copyDto)).thenReturn(copy);
 
         //When&Then
-        mockMvc.perform(post("/v1/library/createCopy")
+        mockMvc.perform(post("/v1/library/copies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -139,7 +139,7 @@ public class LibraryControllerTest {
         when(copyMapper.mapToCopyDtoList(copyList)).thenReturn(copyDtoList);
 
         //When&Then
-        mockMvc.perform(get("/v1/library/getCopies")
+        mockMvc.perform(get("/v1/library/copies")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -167,7 +167,7 @@ public class LibraryControllerTest {
 
         //When&Then
         String queryString = "?title=testTitle";
-        mockMvc.perform(get("/v1/library/getAllCopiesBasedOnTitle" + queryString)
+        mockMvc.perform(get("/v1/library/copies/titles" + queryString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -192,12 +192,12 @@ public class LibraryControllerTest {
         List<CopyDto> copyDtoList = new ArrayList<>();
         copyDtoList.add(copyDto);
 
-        when(dbService.getAllCopiesWithTitle("testTitle")).thenReturn(copyList);
+        when(dbService.getAvailableCopiesWithTitle("testTitle")).thenReturn(copyList);
         when(copyMapper.mapToCopyDtoList(copyList)).thenReturn(copyDtoList);
 
         //When&Then
         String queryString = "?title=testTitle";
-        mockMvc.perform(get("/v1/library/getAllCopiesBasedOnTitle" + queryString)
+        mockMvc.perform(get("/v1/library/copies/available/titles" + queryString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -224,7 +224,7 @@ public class LibraryControllerTest {
 
         //When&Then
         String queryString = "?status=TEST";
-        mockMvc.perform(get("/v1/library/getCopiesByStatus" + queryString)
+        mockMvc.perform(get("/v1/library/copies/status" + queryString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -253,13 +253,13 @@ public class LibraryControllerTest {
                 .borrowings(borrowingDtos)
                 .build();
 
-        when(dbService.borrowTheCopy(0, "testTitle")).thenReturn(reader);
+        when(dbService.borrowTheCopy(1, "testTitle")).thenReturn(reader);
         when(readerMapper.mapToReaderDto(reader)).thenReturn(readerDto);
 
         //When&Then
-        String queryString = "&copyTitle=testTitle";
-        String queryString2 = "?readerId=0";
-        mockMvc.perform(put("/v1/library/borrowTheCopy" + queryString2 + queryString)
+        String queryString = "?copyTitle=testTitle";
+
+        mockMvc.perform(put("/v1/library/readers/1/borrow" + queryString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(0)))
@@ -288,8 +288,7 @@ public class LibraryControllerTest {
         when(borrowingMapper.mapToBorrowingDto(borrowing)).thenReturn(borrowingDto);
 
         //When&Then
-        String queryString = "?copyId=1";
-        mockMvc.perform(put("/v1/library/returnTheCopy" + queryString)
+        mockMvc.perform(put("/v1/library/copies/return/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(222)))
@@ -311,9 +310,9 @@ public class LibraryControllerTest {
         when(copyMapper.mapToCopyDto(copy)).thenReturn(copyDto);
 
         //When&Then
-        String queryString = "?id=12";
-        String queryString2 = "&status=Test";
-        mockMvc.perform(put("/v1/library/updateCopyStatus" + queryString + queryString2)
+        String queryString = "?status=Test";
+
+        mockMvc.perform(put("/v1/library/copies/12" + queryString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(12)))
@@ -327,7 +326,7 @@ public class LibraryControllerTest {
 
         //When&Then
         String queryString = "?title=testTitle";
-        MvcResult result = mockMvc.perform(get("/v1/library/getNumberOfAvailableCopiesBasedOnTitle" + queryString)
+        MvcResult result = mockMvc.perform(get("/v1/library/copies/available/count" + queryString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -350,12 +349,11 @@ public class LibraryControllerTest {
                 .lastName("testLastname")
                 .build();
 
-        when(dbService.getReaderById(1)).thenReturn(Optional.ofNullable(reader));
+        when(dbService.getReaderById(45)).thenReturn(Optional.ofNullable(reader));
         when(readerMapper.mapToReaderDto(reader)).thenReturn(readerDto);
 
         //When&Then
-        String queryString = "?readerId=1";
-        mockMvc.perform(get("/v1/library/getReaderById" + queryString)
+        mockMvc.perform(get("/v1/library/readers/45")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.id", is(56)))
@@ -391,8 +389,7 @@ public class LibraryControllerTest {
         when(borrowingMapper.mapToBorrowingDtoList(borrowings)).thenReturn(dtoBorrowings);
 
         //When&Then
-        String queryString = "?copyId=1";
-        mockMvc.perform(get("/v1/library/getBorrowingsByCopyId" + queryString)
+        mockMvc.perform(get("/v1/library/borrowings/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$[0].id", is(222)))
